@@ -13,16 +13,16 @@ Rcom = 100
 # posicoes_potenciais.append(np.random.randint(0, 300, size=(1, 100)))
 # print (posicoes_potenciais)
 
-# alvos = [(1, 273), (60, 255), (286, 282), (175, 260), (240, 240), (20, 162), (165, 28),
-#          (135, 121), (85, 156), (264, 81), (20, 171), (285, 52), (221, 77), (227, 53),
-#          (183, 0), (146, 16), (10, 36), (202, 176), (217, 228), (17, 208),
-#          (242, 138), (17, 57), (156, 94), (112, 8), (265, 271), (12, 8), (140, 173),
-#          (177, 32), (44, 93), (105, 257), (247, 165), (272, 127), (158, 281),
-#          (39, 127), (131, 231), (256, 253), (268, 16), (253, 150), (182, 181), (86, 55),
-#          (126, 268), (159, 159), (128, 244), (242, 183), (38, 168), (250, 91),
-#          (58, 121), (52, 31), (115, 64), (191, 215)]
+alvos = [(1, 273), (60, 255), (286, 282), (175, 260), (240, 240), (20, 162), (165, 28),
+         (135, 121), (85, 156), (264, 81), (20, 171), (285, 52), (221, 77), (227, 53),
+         (183, 0), (146, 16), (10, 36), (202, 176), (217, 228), (17, 208),
+         (242, 138), (17, 57), (156, 94), (112, 8), (265, 271), (12, 8), (140, 173),
+         (177, 32), (44, 93), (105, 257), (247, 165), (272, 127), (158, 281),
+         (39, 127), (131, 231), (256, 253), (268, 16), (253, 150), (182, 181), (86, 55),
+         (126, 268), (159, 159), (128, 244), (242, 183), (38, 168), (250, 91),
+         (58, 121), (52, 31), (115, 64), (191, 215)]
 
-alvos = [(10, 40), (10, 97), (175, 257), (220, 168)]
+# alvos = [(10, 40), (10, 97), (175, 257), (220, 168)]
 
 PP = [(25, 25), (25, 50), (25, 75), (25, 100), (25, 125), (25, 150), (25, 175), (25, 200), (25, 225), (25, 250),
       (25, 275),
@@ -50,35 +50,45 @@ PP = [(25, 25), (25, 50), (25, 75), (25, 100), (25, 125), (25, 150), (25, 175), 
 
 # Funcoes para avaliar o individuo --------------------------------------------------
 
-def dist(alvo):
+def dist_conn(alvo):
     distancia = []
+    xalvo = alvo[0]
+    yalvo = alvo[1]
     for sensor in PP:
         xsensor = sensor[0]
         ysensor = sensor[1]
-        xalvo = alvo[0]
-        yalvo = alvo[1]
-        distancia.append(math.sqrt(math.pow(xsensor - xalvo, 2) + math.pow(ysensor - yalvo, 2)))
+        distancia.append(math.sqrt(math.pow((xsensor - xalvo), 2) + math.pow((ysensor - yalvo), 2)))
+    return distancia
+
+
+def dist_cov(alvo):
+    distancia = []
+    xalvo = alvo[0]
+    yalvo = alvo[1]
+    for sensor in PP:
+        xsensor = sensor[0]
+        ysensor = sensor[1]
+        distancia.append(math.sqrt(math.pow((xsensor - xalvo), 2) + math.pow((ysensor - yalvo), 2)))
     return distancia
 
 
 def Cov(alvo, individuo):
-    distance = dist(alvo)
+    distance = dist_cov(alvo)
     cont = 0
     for key, ind in enumerate(individuo):
         if ind == 1:
             if distance[key] < Rsen:
                 cont += 1
-                # print cont
     return cont
 
 
 def CovCost(alvo, individuo):
     coverage = Cov(alvo, individuo)
-    return k if math.fabs(coverage) >= k else (math.fabs(coverage) - k)  # abs e o absolute, o modulo do numero
+    return k if coverage >= k else (coverage - k)  # abs e o absolute, o modulo do numero
 
 
 def Com(sensor, individuo):
-    distance = dist(sensor)
+    distance = dist_conn(sensor)
     cont = 0
     for key, ind in enumerate(individuo):
         if ind == 1:
@@ -90,12 +100,12 @@ def Com(sensor, individuo):
 
 def ConnCost(sensor, individuo):
     connected = Com(sensor, individuo)
-    return m if math.fabs(connected) >= m else (math.fabs(connected) - m)
+    return m if connected >= m else (connected - m)
 
 
 def objetivo1(individuo):
     M = 0
-    for gene in individuo:
+    for gene in individuo: # usar funcao sum() ao inves do for
         if gene == 1:
             M += 1
     return (M / K)
@@ -109,6 +119,8 @@ def objetivo2(individuo):
         soma += covcost
         if covcost > 0:
             N += 1
+    if N == 0:
+        return 0
     # print (soma, (soma / (N * k)), N*k)
     return (soma / (N * k))
 
@@ -122,5 +134,7 @@ def objetivo3(individuo):
             soma += concost
             if concost > 0:
                 M += 1
+    if M == 0:
+        return 0
     # print (soma / (M * m), soma, M*m)
     return (soma / (M * m))

@@ -5,7 +5,7 @@ from deap import creator, base, tools, algorithms
 TamPop = 60 #Tamanho da populacao
 W1, W2, W3 = 0.4, 0.3, 0.3
 
-CXPB, MUTPB = 0.5, 0.3
+CXPB, MUTPB = 0.5, 0.03
 
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))  # indica que irei maximizar a funcao fitness
 creator.create("Individuo", list, fitness=creator.FitnessMax)
@@ -43,7 +43,8 @@ toolbox.register("mate", tools.cxOnePoint)
 toolbox.register("mutate", tools.mutFlipBit, indpb=MUTPB)
 
 # registro do operador de selecao
-toolbox.register("select", tools.selRoulette, k=TamPop)
+toolbox.register("select", tools.selTournament, tournsize=3)
+# toolbox.register("select", tools.selRoulette)
 
 # inicializa a populacao com n individuos
 populacao = toolbox.populacao(n=TamPop)
@@ -66,15 +67,20 @@ print (fits)
 # Variavel que guarda o numero de geracoes
 g = 0
 
-while max(fits) < 0.94 and g < 100:
+random.seed(64)
+
+while max(fits) < 0.99 and g < 1000:
     # nova geracao
     g = g + 1
     print("-- Geracao %i --" % g)
 
     # Seleciona a nova geracao de individuos
-    offspring = toolbox.select(populacao)
-    # Cola os individuos selecionados
-    offspring = list(map(toolbox.clone, offspring))
+    offspring = toolbox.select(populacao, len(populacao))
+
+    # Clona os individuos selecionados
+    offspring = list(map(toolbox.clone, offspring)) # retorna uma lista aplicando a funcao clone em cada individuo da populacao
+
+    # offspring = algorithms.varAnd(offspring, toolbox, cxpb=CXPB, mutpb=0.03)
 
     # Aplicando a mutacao e o crossover no offspring
     for child1, child2 in zip(offspring[::2], offspring[1::2]):
@@ -132,9 +138,12 @@ top10 = tools.selBest(populacao, k=1)
 fits = [ind.fitness.values[0] for ind in top10]
 teste = []
 points = top10[0]
+
 print (points, '\n', fits)
+print ("numero de sensores implantados", sum(points))
+
 for key, plo in enumerate(points):
-    if (plo == 1):
+    if plo == 1:
         teste.append(functions.PP[key])
 
 plotax = []
@@ -157,7 +166,8 @@ for p in functions.PP:
 
 import matplotlib.pyplot as plt
 
-plt.plot(plotax, plotay, 'ro', ms=50)
+plt.plot(plotax, plotay, 'ro', ms=115, alpha=0.2)
+# plt.plot(plotax, plotay, 'yo', ms=100, alpha=0.1)
 # plt.plot(plotax, plotay, 'ro')
 plt.plot(alvosx, alvosy, 'bo')
 plt.plot(ppx, ppy, 'g^')
