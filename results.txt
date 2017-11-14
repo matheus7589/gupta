@@ -1,0 +1,20 @@
+Resultados
+
+-> 100 pontos potenciais:
+k = 1 e m = 1 => 17 selecionados
+k = 2 e m = 1 => 24 selecionados
+k = 2 e m = 2 => 24 selecionados
+k = 3 e m = 2 => 36 selecionados
+
+-> 200 pontos potenciais:
+k = 1 e m = 1 => 18 selecionados
+k = 2 e m = 1 => 33 selecionados
+k = 2 e m = 2 => 30 selecionados
+k = 3 e m = 2 => 44 selecionados
+
+
+-> 300 pontos potenciais:
+k = 1 e m = 1 => 45 selecionados
+k = 2 e m = 1 => 53 selecionados
+k = 2 e m = 2 => 58 selecionados
+k = 3 e m = 2 => 67 selecionados

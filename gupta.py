@@ -69,7 +69,7 @@ g = 0
 
 random.seed(64)
 
-while max(fits) < 0.99 and g < 1000:
+while max(fits) < 0.99 and g < 500:
     # nova geracao
     g = g + 1
     print("-- Geracao %i --" % g)
@@ -123,14 +123,6 @@ while max(fits) < 0.99 and g < 1000:
     print("  Max %s" % max(fits))
     print("  Avg %s" % mean)
 
-    """Essa funcao aplica a parte de variacao da populacao
-    (crossover e mutacao)"""
-    # offspring = algorithms.varAnd(populacao, toolbox, cxpb=0.5, mutpb=0.3)
-    # fits = toolbox.map(toolbox.evaluate, offspring)
-    # print (fits)
-    # for fit, ind in zip(fits, offspring):
-    #     ind.fitness.values = fit
-    # populacao = toolbox.select(offspring, k=len(populacao))
 
 print("-- Fim da Evolucao --")
 
@@ -172,6 +164,6 @@ plt.plot(plotax, plotay, 'ro', ms=115, alpha=0.2)
 plt.plot(alvosx, alvosy, 'bo')
 plt.plot(ppx, ppy, 'g^')
 plt.axis([0, 300, 0, 300])
-plt.ylabel('some numbers')
+plt.ylabel('Representacao do Melhor Individuo')
 plt.show()
 
