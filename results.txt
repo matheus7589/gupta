@@ -18,3 +18,16 @@ k = 1 e m = 1 => 45 selecionados
 k = 2 e m = 1 => 53 selecionados
 k = 2 e m = 2 => 58 selecionados
 k = 3 e m = 2 => 67 selecionados
+
+-> 400 pontos potenciais:
+k = 1 e m = 1 => 57 selecionados
+k = 2 e m = 1 => 62 selecionados
+k = 2 e m = 2 => 69 selecionados
+k = 3 e m = 2 => 75 selecionados
+
+
+-> 500 pontos potenciais:
+k = 1 e m = 1 => 100 selecionados
+k = 2 e m = 1 => 116 selecionados
+k = 2 e m = 2 => 105 selecionados
+k = 3 e m = 2 => 120 selecionados

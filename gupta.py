@@ -69,7 +69,7 @@ g = 0
 
 random.seed(64)
 
-while max(fits) < 0.99 and g < 500:
+while max(fits) < 0.99 and g < 400:
     # nova geracao
     g = g + 1
     print("-- Geracao %i --" % g)

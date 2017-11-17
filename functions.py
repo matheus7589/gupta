@@ -3,8 +3,8 @@ import points
 import math, numpy as np
 
 K = len(points.pp_400)  # numero de nos possiveis para implantacao(total de genes)
-k = 1  # k-cobertura
-m = 1  # m-conectividade
+k = 3  # k-cobertura
+m = 2  # m-conectividade
 # N = 100  # numero total de alvos
 
 Rsen = 50.0
