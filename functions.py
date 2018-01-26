@@ -2,7 +2,7 @@ from __future__ import division
 import points_grid, points_random
 import math, numpy as np
 
-K = len(points_random.pp_500)  # numero de nos possiveis para implantacao(total de genes)
+K = len(points_random.pp_voronoi_alvos1)  # numero de nos possiveis para implantacao(total de genes)
 k = 1  # k-cobertura
 m = 1  # m-conectividade
 # N = 100  # numero total de alvos
@@ -26,7 +26,7 @@ alvos = [(1, 273), (60, 255), (286, 282), (175, 260), (240, 240), (20, 162), (16
 
 # alvos = [(10, 40), (10, 97), (175, 257), (220, 168)]
 
-PP = points_random.pp_500
+PP = points_random.pp_voronoi_alvos1
 
 # PP = [(25, 25), (25, 50), (25, 75), (25, 100), (25, 125), (25, 150), (25, 175), (25, 200), (25, 225), (25, 250),
 #       (25, 275),

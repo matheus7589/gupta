@@ -1,5 +1,5 @@
 from __future__ import division
-import random, functions
+import random, functions, points_random
 from deap import creator, base, tools, algorithms
 
 TamPop = 60 #Tamanho da populacao
@@ -156,6 +156,7 @@ for p in functions.PP:
     ppx.append(p[0])
     ppy.append(p[1])
 
+from scipy.spatial import Voronoi, voronoi_plot_2d
 import matplotlib.pyplot as plt
 
 plt.plot(plotax, plotay, 'ro', ms=115, alpha=0.2)
@@ -165,5 +166,13 @@ plt.plot(alvosx, alvosy, 'bo')
 plt.plot(ppx, ppy, 'g^')
 plt.axis([0, 300, 0, 300])
 plt.ylabel('Representacao do Melhor Individuo')
+plt.show()
+
+
+#Voronoi
+vor = Voronoi(points_random.alvos1)
+
+voronoi_plot_2d(vor)
+
 plt.show()
 

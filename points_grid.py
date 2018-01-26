@@ -1,4 +1,4 @@
-
+import functions
 # posicoes_potenciais = []
 # j = 0
 # i = 0
@@ -242,7 +242,7 @@ pp_500 = [(7, 7), (7, 20), (7, 33), (7, 46), (7, 59), (7, 72), (7, 85), (7, 98),
 from scipy.spatial import Voronoi, voronoi_plot_2d
 import matplotlib.pyplot as plt
 
-# vor = Voronoi(pp_100_random)
+# vor = Voronoi(pp_100)
 #
 # print (vor.vertices)
 #
