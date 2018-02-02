@@ -1,6 +1,7 @@
 from __future__ import division
 import points_grid, points_random
 import math, numpy as np
+from scipy.spatial import distance
 
 K = len(points_random.pp_voronoi_alvos1)  # numero de nos possiveis para implantacao(total de genes)
 k = 1  # k-cobertura
@@ -54,34 +55,23 @@ PP = points_random.pp_voronoi_alvos1
 
 # Funcoes para avaliar o individuo --------------------------------------------------
 
-def dist_conn(alvo):
-    distancia = []
-    xalvo = alvo[0]
-    yalvo = alvo[1]
-    for sensor in PP:
-        xsensor = sensor[0]
-        ysensor = sensor[1]
-        distancia.append(math.sqrt(math.pow((xsensor - xalvo), 2) + math.pow((ysensor - yalvo), 2)))
+def dist_conn(alvo, individuo):
+    distancia = distance.euclidean(alvo, individuo)
     return distancia
 
 
-def dist_cov(alvo):
-    distancia = []
-    xalvo = alvo[0]
-    yalvo = alvo[1]
-    for sensor in PP:
-        xsensor = sensor[0]
-        ysensor = sensor[1]
-        distancia.append(math.sqrt(math.pow((xsensor - xalvo), 2) + math.pow((ysensor - yalvo), 2)))
+def dist_cov(alvo, individuo):
+    # print (alvo, individuo)
+    distancia = distance.euclidean(alvo, individuo)
     return distancia
 
 
 def Cov(alvo, individuo):
-    distance = dist_cov(alvo)
     cont = 0
     for key, ind in enumerate(individuo):
         if ind == 1:
-            if distance[key] < Rsen:
+            distance = dist_cov(alvo, PP[key])
+            if distance < Rsen:
                 cont += 1
     return cont
 
@@ -92,12 +82,12 @@ def CovCost(alvo, individuo):
 
 
 def Com(sensor, individuo):
-    distance = dist_conn(sensor)
     cont = 0
     for key, ind in enumerate(individuo):
         if ind == 1:
-            if distance[key] > 0.0:
-                if distance[key] <= Rcom:
+            distance = dist_conn(sensor, PP[key])
+            if distance > 0.0:
+                if distance <= Rcom:
                     cont += 1
     return cont
 
