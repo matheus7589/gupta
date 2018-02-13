@@ -39,7 +39,11 @@ def swap_area_crossover(ind1, ind2):
     indexes = rand.choices(ativos, k=2)
     p = ponto_medio(PP[indexes[0]], PP[indexes[1]])
     raio = (distance.euclidean(PP[indexes[0]], PP[indexes[1]]))/2
-    print(raio)
+    for key, value in enumerate(ind1):
+        if dist(p, PP[key]) <= raio:
+            aux = ind1[key]
+            ind1[key] = ind2[key]
+            ind2[key] = aux
 
     return ind1, ind2
 
@@ -49,22 +53,30 @@ def ponto_medio(p1, p2):
 
 # Funcoes para avaliar o individuo --------------------------------------------------
 
-def dist_conn(alvo, individuo):
+def dist(alvo, individuo):
     distancia = distance.euclidean(alvo, individuo)
     return distancia
 
 
-def dist_cov(alvo, individuo):
-    # print (alvo, individuo)
-    distancia = distance.euclidean(alvo, individuo)
-    return distancia
+# funcoes nao usadas
+########################################################
+# def dist_conn(alvo, individuo):
+#     distancia = distance.euclidean(alvo, individuo)
+#     return distancia
+#
+#
+# def dist_cov(alvo, individuo):
+#     # print (alvo, individuo)
+#     distancia = distance.euclidean(alvo, individuo)
+#     return distancia
+########################################################
 
 
 def Cov(alvo, individuo):
     cont = 0
     for key, ind in enumerate(individuo):
         if ind == 1:
-            distance = dist_cov(alvo, PP[key])
+            distance = dist(alvo, PP[key])
             if distance < Rsen:
                 cont += 1
     return cont
@@ -79,7 +91,7 @@ def Com(sensor, individuo):
     cont = 0
     for key, ind in enumerate(individuo):
         if ind == 1:
-            distance = dist_conn(sensor, PP[key])
+            distance = dist(sensor, PP[key])
             if distance > 0.0:
                 if distance <= Rcom:
                     cont += 1

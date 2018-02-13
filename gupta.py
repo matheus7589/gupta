@@ -38,6 +38,7 @@ toolbox.register("evaluate", Fitness)
 
 # registro do operador de crossover
 toolbox.register("mate", functions.swap_area_crossover)
+# toolbox.register("mate", tools.cxOnePoint)
 
 # registro do operador de mutacao, e sua probabilidade de ocorrer
 toolbox.register("mutate", tools.mutFlipBit, indpb=MUTPB)
