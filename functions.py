@@ -30,6 +30,18 @@ alvos = [(1, 273), (60, 255), (286, 282), (175, 260), (240, 240), (20, 162), (16
 
 PP = points_random.pp_voronoi_alvos1
 
+# Funcao completar posicoes potenciais
+
+def complete_pp(potential_points, length):
+    need = length - len(potential_points)
+    x = np.random.uniform(0.0, 300.0, need)
+    y = np.random.uniform(0.0, 300.0, need)
+    for key, value in enumerate(x):
+        potential_points = potential_points + ((value, y[key]),)
+
+    return (potential_points)
+
+
 # Funcao de pertubacao
 
 def pertubation_point(ponto, raio):

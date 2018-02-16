@@ -177,5 +177,5 @@ voronoi_plot_2d(vor)
 
 plt.show()
 
-functions.pertubation_point((0, 0), 10)
+print(functions.complete_pp(functions.PP, 400))
 
