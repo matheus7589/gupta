@@ -2,6 +2,7 @@ from __future__ import division
 import points_grid, points_random
 import math, numpy as np, random as rand
 from scipy.spatial import distance
+# from matplotlib import pyplot as plt
 
 K = len(points_random.pp_voronoi_alvos1)  # numero de nos possiveis para implantacao(total de genes)
 k = 1  # k-cobertura
@@ -28,6 +29,23 @@ alvos = [(1, 273), (60, 255), (286, 282), (175, 260), (240, 240), (20, 162), (16
 # alvos = [(10, 40), (10, 97), (175, 257), (220, 168)]
 
 PP = points_random.pp_voronoi_alvos1
+
+# Funcao de pertubacao
+
+def pertubation_point(ponto, raio):
+    rad = raio
+    num = 1
+
+    t = np.random.uniform(0.0, 2.0 * np.pi, num)
+    r = rad * np.sqrt(np.random.uniform(0.0, 1.0, num))
+    x = r * np.cos(t)
+    y = r * np.sin(t)
+
+    # plt.plot(ponto[0], ponto[1], "bo", ms=10)
+    # plt.plot(x+ponto[0], y+ponto[1], "ro", ms=1)
+    # plt.axis([-15, 15, -15, 15])
+    # plt.show()
+    return (x + ponto[0]), (y + ponto[1])
 
 # Funcao de crossover baseada no Flexible algorith paper
 
