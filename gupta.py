@@ -3,8 +3,7 @@ import random, functions, points_random
 from deap import creator, base, tools, algorithms
 # from scipy.spatial import Voronoi, voronoi_plot_2d
 import matplotlib.pyplot as plt
-import os
-import errno
+
 
 TamPop = 60 #Tamanho da populacao
 W1, W2, W3 = 0.4, 0.3, 0.3
@@ -16,6 +15,8 @@ for i in range(30):
 
     # Armazenamento de informacao sobre a execucao
     melhores = []
+    melhores_global = []
+    points_global = []
 
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))  # indica que irei maximizar a funcao fitness
     creator.create("Individuo", list, fitness=creator.FitnessMax)
@@ -145,8 +146,12 @@ for i in range(30):
     teste = []
     points = top10[0]
 
-    print (points, '\n', fits)
-    print ("numero de sensores implantados", sum(points))
+    # melhores globais
+    melhores_global.append(max(fits))
+    points_global.append(sum(points))
+
+    print(points, '\n', fits)
+    print("numero de sensores implantados", sum(points))
 
     for key, plo in enumerate(points):
         if plo == 1:
@@ -171,14 +176,11 @@ for i in range(30):
         ppy.append(p[1])
 
     '''Cria o diretorio para salvar os testes realizados'''
-    directory = "/home/matheus/Documentos/Projeto_de_Graduacao/results/k1m1/100_pontos/exec_" + str(i+1)
-    try:
-        os.makedirs(directory)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            raise
+    directory = functions.create_directory(i)
 
+    plt.figure()
 
+    # Demostra a posicao dos pontos
     plt.plot(plotax, plotay, 'ro', ms=115, alpha=0.2)
     # plt.plot(plotax, plotay, 'yo', ms=100, alpha=0.1)
     # plt.plot(plotax, plotay, 'ro')
@@ -190,11 +192,32 @@ for i in range(30):
     plt.savefig(path)
     # plt.show()
 
+    # Cria uma nova instancia de figura para separar os plots
+    plt.figure()
+
+    # Grafico de convergencia
+    plt.plot(melhores)
+    plt.ylabel('Grau de Precisao')
+    plt.xlabel('Numero de Geracoes')
+    path_converg = directory + "/convergencia_" + str(i + 1) + ".png"
+    plt.savefig(path_converg)
+
+
     # Escrevendo informacoes da execucao
     f = open(directory + '/info.txt', 'w')
-    f.write('Media = ' + str(sum(melhores)/len(melhores)) + '\n' + 'Variancia = ' + str(functions.np.var(melhores)))
-    # falta o numero de posicoes implantadas e etc
+    f.write('Media = ' + str(sum(melhores)/len(melhores)) + '\n' + 'Variancia = ' + str(functions.np.var(melhores)) +
+            '\n' + 'Numero de Sensores implantados = ' + str(sum(points)) + '\n')
     f.close()
+
+directory_global = "/home/matheus/Documentos/Projeto_de_Graduacao/results/k1m1/100_pontos"
+
+# Escrevendo informacoes da execucao
+f = open(directory + '/info_global.txt', 'w')
+f.write('Media = ' + str(sum(melhores_global)/len(melhores_global)) + '\n' + 'Variancia = ' +
+        str(functions.np.var(melhores_global)) + '\n' + 'Media de Sensores implantados = ' +
+        str(sum(points_global)/len(points_global)) + '\n')
+f.close()
+
 
 
     #Voronoi

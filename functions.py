@@ -2,6 +2,8 @@ from __future__ import division
 import points_grid, points_random
 import math, numpy as np, random as rand
 from scipy.spatial import distance
+import os
+import errno
 # from matplotlib import pyplot as plt
 
 K = len(points_random.pp_voronoi_alvos1)  # numero de nos possiveis para implantacao(total de genes)
@@ -17,18 +19,21 @@ Rcom = 100.0
 # print (posicoes_potenciais)
 
 
-alvos = [(1, 273), (60, 255), (286, 282), (175, 260), (240, 240), (20, 162), (165, 28),
-         (135, 121), (85, 156), (264, 81), (20, 171), (285, 52), (221, 77), (227, 53),
-         (183, 0), (146, 16), (10, 36), (202, 176), (217, 228), (17, 208),
-         (242, 138), (17, 57), (156, 94), (112, 8), (265, 271), (12, 8), (140, 173),
-         (177, 32), (44, 93), (105, 257), (247, 165), (272, 127), (158, 281),
-         (39, 127), (131, 231), (256, 253), (268, 16), (253, 150), (182, 181), (86, 55),
-         (126, 268), (159, 159), (128, 244), (242, 183), (38, 168), (250, 91),
-         (58, 121), (52, 31), (115, 64), (191, 215)]
-
-# alvos = [(10, 40), (10, 97), (175, 257), (220, 168)]
 
 PP = points_random.pp_voronoi_alvos1
+
+
+# Funcao para criar diretorio
+
+def create_directory(i):
+    directory = "/home/matheus/Documentos/Projeto_de_Graduacao/results/k1m1/100_pontos/exec_" + str(i + 1)
+    try:
+        os.makedirs(directory)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+    return directory
+
 
 # Funcao completar posicoes potenciais
 
@@ -144,7 +149,7 @@ def objetivo1(individuo):
 def objetivo2(individuo):
     soma = 0
     N = 0
-    for alvo in alvos:
+    for alvo in points_random.alvos1:
         covcost = CovCost(alvo, individuo)
         soma += covcost
         if covcost > 0:
