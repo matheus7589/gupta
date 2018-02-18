@@ -6,7 +6,7 @@ import os
 import errno
 # from matplotlib import pyplot as plt
 
-K = len(points_random.pp_voronoi_alvos1)  # numero de nos possiveis para implantacao(total de genes)
+K = len(points_random.pp_200)  # numero de nos possiveis para implantacao(total de genes)
 k = 1  # k-cobertura
 m = 1  # m-conectividade
 # N = 100  # numero total de alvos
@@ -18,15 +18,15 @@ Rcom = 100.0
 # posicoes_potenciais.append(np.random.randint(0, 300, size=(1, 100)))
 # print (posicoes_potenciais)
 
+alvos = points_random.alvos1
 
-
-PP = points_random.pp_voronoi_alvos1
+PP = points_random.pp_200
 
 
 # Funcao para criar diretorio
 
 def create_directory(i):
-    directory = "/home/matheus/Documentos/Projeto_de_Graduacao/results/k1m1/100_pontos/exec_" + str(i + 1)
+    directory = "/home/matheus/Documentos/Projeto_de_Graduacao/results/k1m1/200_pontos/exec_" + str(i + 1)
     try:
         os.makedirs(directory)
     except OSError as e:
@@ -75,12 +75,22 @@ def swap_area_crossover(ind1, ind2):
     p = ponto_medio(PP[indexes[0]], PP[indexes[1]])
     raio = (distance.euclidean(PP[indexes[0]], PP[indexes[1]]))/2
     for key, value in enumerate(ind1):
-        if dist(p, PP[key]) <= raio:
+        if dist_swap(p, PP[key]) <= raio:
             aux = ind1[key]
             ind1[key] = ind2[key]
             ind2[key] = aux
 
     return ind1, ind2
+
+# Funcao de mutacao
+
+def mutFlipToZero(individual, indpb):
+
+    for i in range(len(individual)):
+        if rand.random() < indpb:
+            individual[i] = 0
+
+    return individual,
 
 
 def ponto_medio(p1, p2):
@@ -88,7 +98,15 @@ def ponto_medio(p1, p2):
 
 # Funcoes para avaliar o individuo --------------------------------------------------
 
-def dist(alvo, individuo):
+def dist_cov(alvo, individuo):
+    distancia = distance.euclidean(alvo, individuo)
+    return distancia
+
+def dist_conn(alvo, individuo):
+    distancia = distance.euclidean(alvo, individuo)
+    return distancia
+
+def dist_swap(alvo, individuo):
     distancia = distance.euclidean(alvo, individuo)
     return distancia
 
@@ -111,8 +129,8 @@ def Cov(alvo, individuo):
     cont = 0
     for key, ind in enumerate(individuo):
         if ind == 1:
-            distance = dist(alvo, PP[key])
-            if distance < Rsen:
+            distance = dist_cov(alvo, PP[key])
+            if distance <= Rsen:
                 cont += 1
     return cont
 
@@ -126,8 +144,8 @@ def Com(sensor, individuo):
     cont = 0
     for key, ind in enumerate(individuo):
         if ind == 1:
-            distance = dist(sensor, PP[key])
-            if distance > 0.0:
+            distance = dist_conn(sensor, PP[key])
+            if distance > 0.0: # evita o mesmo individuo
                 if distance <= Rcom:
                     cont += 1
     return cont
