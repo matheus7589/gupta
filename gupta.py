@@ -11,6 +11,13 @@ W1, W2, W3 = 0.4, 0.3, 0.3
 
 CXPB, MUTPB = 0.5, 0.03
 
+list_km = ['k2m1', 'k3m1', 'k2m2', 'k2m3', 'k1m2', 'k1m3', 'k3m2', 'k3m3']
+
+list_pp = ['100', '200', '300', '400', '500']
+
+
+functions.calculate_distances()
+functions.calculate_pp_distances()
 
 if __name__ == "__main__":
 
@@ -229,7 +236,7 @@ if __name__ == "__main__":
     f = open(directory_global + '/info_global.txt', 'w')
     f.write('Media = ' + str(sum(melhores_global)/len(melhores_global)) + '\n' + 'Variancia = ' +
             str(functions.np.var(melhores_global)) + '\n' + 'Media de Sensores implantados = ' +
-            str(sum(points_global)/len(points_global)) + '\n')
+            str(sum(points_global)/len(points_global)) + '\n' + 'Melhor execucao = ' + str(max(melhores_global)) )
     f.close()
 
 
