@@ -15,6 +15,8 @@ list_km = ['k2m1', 'k3m1', 'k2m2', 'k2m3', 'k1m2', 'k1m3', 'k3m2', 'k3m3']
 
 list_pp = ['100', '200', '300', '400', '500']
 
+funcoes = functions.Functions(points_random.pp_500)
+print(funcoes.get_pp())
 
 functions.calculate_distances()
 functions.calculate_pp_distances()
