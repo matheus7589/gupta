@@ -25,22 +25,15 @@ class Functions(object):
 
 
     PP = points_random.pp_100
-    #
-    # def set(argument):
-    #     switcher = {
-    #         '100': points_random.pp_100,
-    #         '200': points_random.pp_200,
-    #         '300': points_random.pp_300,
-    #         '400': points_random.pp_400,
-    #         '500': points_random.pp_500,
-    #     }
-    #
-    #     PP = switcher.get(argument)
-    # print("aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\n")
-    # print(PP)
 
-    def __init__(self, pp):
+    dist_alvos_pontos = []
+    dist_pontos_pontos = []
+
+    def __init__(self, pp, Kzao, kzinho, m):
         self.set_pp(pp)
+        self.set_K(Kzao)
+        self.set_k(kzinho)
+        self.set_m(m)
 
     # Calcular distancias uma unica vez
     def init_distances(self):
@@ -68,8 +61,9 @@ class Functions(object):
 
     # Funcao para criar diretorio
 
-    def create_directory(self, i):
-        directory = "/home/matheus/Documentos/Projeto_de_Graduacao/results/k1m1/100_pontos/exec_" + str(i + 1)
+    def create_directory(self, i, restriction, quant_points):
+        directory = "/home/matheus/Documentos/Projeto_de_Graduacao/results/" + str(restriction) + "/" \
+                    + str(quant_points) + "/exec_" + str(i + 1)
         try:
             os.makedirs(directory)
         except OSError as e:
