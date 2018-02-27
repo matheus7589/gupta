@@ -24,7 +24,7 @@ class Functions(object):
 
 
 
-    PP = points_random.pp_100
+    PP = []
 
     dist_alvos_pontos = []
     dist_pontos_pontos = []
@@ -130,7 +130,7 @@ class Functions(object):
         return individual,
 
 
-    def ponto_medio(slef, p1, p2):
+    def ponto_medio(self, p1, p2):
         return (p1[0]+p2[0])/2, (p1[1]+p2[1])/2
 
     # Funcoes para avaliar o individuo --------------------------------------------------
@@ -172,7 +172,7 @@ class Functions(object):
 
     def CovCost(self, alvo, individuo):
         coverage = self.Cov(alvo, individuo)
-        return self.get_k() if coverage >= self.get_k() else (coverage - self.get_k())  # abs e o absolute, o modulo do numero
+        return self.get_k() if coverage >= self.get_k() else (coverage - self.get_k())
 
 
     def Com(self, sensor, individuo):

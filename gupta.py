@@ -11,7 +11,7 @@ W1, W2, W3 = 0.4, 0.3, 0.3
 
 CXPB, MUTPB = 0.5, 0.03
 
-list_km = ['k1m1', 'k2m1', 'k3m1', 'k2m2', 'k2m3', 'k1m2', 'k1m3', 'k3m2', 'k3m3']
+list_km = ['k1m1', 'k1m2', 'k1m3', 'k2m1', 'k2m2', 'k2m3', 'k3m1', 'k3m2', 'k3m3']
 
 list_pp = ['100', '200', '300', '400', '500']
 
@@ -25,6 +25,7 @@ def set_points(argument):
         '500': points_random.pp_500,
     }
     return switcher.get(argument)
+
 
 def set_restrictions(argument):
     switcher = {
@@ -40,12 +41,12 @@ def set_restrictions(argument):
     }
     return switcher.get(argument)
 
+
 if __name__ == "__main__":
 
     for restricoes in list_km:
 
         for pontos_potenciais in list_pp:
-
 
             funcoes = functions.Functions(set_points(pontos_potenciais), len(set_points(pontos_potenciais)),
                                           set_restrictions(restricoes)[0], set_restrictions(restricoes)[1])
@@ -62,7 +63,8 @@ if __name__ == "__main__":
 
                 creator.create("FitnessMax", base.Fitness, weights=(1.0,))  # indica que irei maximizar a funcao fitness
                 creator.create("Individuo", list, fitness=creator.FitnessMax)
-                # a linha acima cria um individuo que herda as propriedades de 'list' e tem um atributo de fitness do tipo 'FitnessMax'
+                # a linha acima cria um individuo que herda as propriedades de 'list' e tem um atributo de fitness do
+                # tipo 'FitnessMax'
 
                 toolbox = base.Toolbox()  # a 'toolbox' armazena funcoes e seus metodos
 
@@ -74,7 +76,6 @@ if __name__ == "__main__":
 
                 # define a populacao como uma lista de individuoa
                 toolbox.register("populacao", tools.initRepeat, list, toolbox.individuo)
-
 
                 # a funcao objetivo, fitness, que sera maximizada
                 def Fitness(individuo):
@@ -104,12 +105,11 @@ if __name__ == "__main__":
                 # toolbox.register("select", tools.selRoulette)
 
                 # Inicia o Multithreading
-                pool = multiprocessing.Pool()
-                toolbox.register("map", pool.map)
+                # pool = multiprocessing.Pool()
+                # toolbox.register("map", pool.map)
 
                 # inicializa a populacao com n individuos
                 populacao = toolbox.populacao(n=TamPop)
-
 
                 print("Inicio da evolucao")
 
@@ -122,7 +122,7 @@ if __name__ == "__main__":
 
                 # Pegas todos os valores de fitness
                 fits = [ind.fitness.values[0] for ind in populacao]
-                print (fits)
+                print(fits)
 
                 # Variavel que guarda o numero de geracoes
                 g = 0
@@ -136,7 +136,8 @@ if __name__ == "__main__":
                     offspring = toolbox.select(populacao, len(populacao))
 
                     # Clona os individuos selecionados
-                    offspring = list(map(toolbox.clone, offspring)) # retorna uma lista aplicando a funcao clone em cada individuo da populacao
+                    offspring = list(map(toolbox.clone, offspring)) # retorna uma lista aplicando a funcao clone em cada
+                    #  individuo da populacao
 
                     # offspring = algorithms.varAnd(offspring, toolbox, cxpb=CXPB, mutpb=0.03)
 
@@ -184,9 +185,7 @@ if __name__ == "__main__":
                     # Armazena o informacoes referentes a cada execucao
                     melhores.append(max(fits))
 
-
                 print("-- Fim da Evolucao --")
-
 
                 top10 = tools.selBest(populacao, k=1)
                 fits = [ind.fitness.values[0] for ind in top10]
@@ -225,7 +224,7 @@ if __name__ == "__main__":
                 '''Cria o diretorio para salvar os testes realizados'''
                 directory = funcoes.create_directory(i, restricoes, pontos_potenciais)
 
-                plt.figure()
+                figura_inner = plt.figure()
 
                 # Demostra a posicao dos pontos
                 plt.plot(plotax, plotay, 'ro', ms=115, alpha=0.2)
@@ -237,10 +236,11 @@ if __name__ == "__main__":
                 plt.ylabel('Representacao do Melhor Individuo')
                 path = directory + "/evolucao_" + str(i + 1) + ".png"
                 plt.savefig(path)
+                plt.close(figura_inner)
                 # plt.show()
 
                 # Cria uma nova instancia de figura para separar os plots
-                plt.figure()
+                figura_inner_2 = plt.figure()
 
                 # Grafico de convergencia
                 plt.plot(melhores)
@@ -248,7 +248,7 @@ if __name__ == "__main__":
                 plt.xlabel('Numero de Geracoes')
                 path_converg = directory + "/convergencia_" + str(i + 1) + ".png"
                 plt.savefig(path_converg)
-
+                plt.close(figura_inner_2)
 
                 # Escrevendo informacoes da execucao
                 f = open(directory + '/info.txt', 'w')
@@ -258,7 +258,7 @@ if __name__ == "__main__":
                 f.close()
 
                 # Encerra o multithreading
-                pool.close()
+                # pool.close()
 
             directory_global = "/home/matheus/Documentos/Projeto_de_Graduacao/results/" + str(restricoes) +\
                                "/" + str(pontos_potenciais)
