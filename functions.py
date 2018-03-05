@@ -62,7 +62,7 @@ class Functions(object):
     # Funcao para criar diretorio
 
     def create_directory(self, i, restriction, quant_points):
-        directory = "/home/matheus/Documentos/Projeto_de_Graduacao/results/" + str(restriction) + "/" \
+        directory = "/home/matheus/Documentos/Projeto_de_Graduacao/results_alterado/" + str(restriction) + "/" \
                     + str(quant_points) + "/exec_" + str(i + 1)
         try:
             os.makedirs(directory)
@@ -76,19 +76,20 @@ class Functions(object):
 
     def complete_pp(self, potential_points, length):
         need = length - len(potential_points)
-        x = np.random.uniform(0.0, 300.0, need)
-        y = np.random.uniform(0.0, 300.0, need)
-        for key, value in enumerate(x):
-            potential_points = potential_points + ((value, y[key]),)
+        if need > 0:
+            x = np.random.uniform(0.0, 300.0, need)
+            y = np.random.uniform(0.0, 300.0, need)
+            for key, value in enumerate(x):
+                potential_points = potential_points + ((value, y[key]),)
 
-        return (potential_points)
+        return potential_points
 
 
     # Funcao de pertubacao
 
-    def pertubation_point(self, ponto, raio):
+    def pertubation_point(self, ponto, raio, n):
         rad = raio
-        num = 1
+        num = n
 
         t = np.random.uniform(0.0, 2.0 * np.pi, num)
         r = rad * np.sqrt(np.random.uniform(0.0, 1.0, num))

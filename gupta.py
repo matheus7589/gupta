@@ -26,6 +26,16 @@ def set_points(argument):
     }
     return switcher.get(argument)
 
+def set_points_altered(argument):
+    switcher = {
+        '100': points_random.pp_voronoi_alvos1,
+        '200': points_random.pp_voronoi_alvos1,
+        '300': points_random.pp_voronoi_alvos1,
+        '400': points_random.pp_voronoi_alvos1,
+        '500': points_random.pp_voronoi_alvos1,
+    }
+    return switcher.get(argument)
+
 
 def set_restrictions(argument):
     switcher = {
@@ -48,8 +58,19 @@ if __name__ == "__main__":
 
         for pontos_potenciais in list_pp:
 
-            funcoes = functions.Functions(set_points(pontos_potenciais), len(set_points(pontos_potenciais)),
+            funcoes = functions.Functions(set_points_altered(pontos_potenciais),
+                                          len(set_points_altered(pontos_potenciais)),
                                           set_restrictions(restricoes)[0], set_restrictions(restricoes)[1])
+
+            funcoes.set_pp(funcoes.complete_pp(funcoes.get_pp(),
+                                               len(set_points(pontos_potenciais))))  # completa o numero de pontos
+
+            new_pontos = []
+            for key, p in enumerate(funcoes.get_pp()):
+                new_pontos.append(funcoes.pertubation_point(p, 10, 1))
+
+            funcoes.set_pp(new_pontos)  # seta os pontos com a perturbacao
+
             funcoes.init_distances()
             funcoes.calculate_distances()
             funcoes.calculate_pp_distances()
@@ -59,6 +80,7 @@ if __name__ == "__main__":
                 # Armazenamento de informacao sobre a execucao
                 melhores = []
                 melhores_global = []
+                points_inner = []
                 points_global = []
 
                 creator.create("FitnessMax", base.Fitness, weights=(1.0,))  # indica que irei maximizar a funcao fitness
@@ -93,8 +115,8 @@ if __name__ == "__main__":
                 toolbox.register("evaluate", Fitness)
 
                 # registro do operador de crossover
-                # toolbox.register("mate", functions.swap_area_crossover)
-                toolbox.register("mate", tools.cxOnePoint)
+                toolbox.register("mate", funcoes.swap_area_crossover)
+                # toolbox.register("mate", tools.cxOnePoint)
 
                 # registro do operador de mutacao, e sua probabilidade de ocorrer
                 toolbox.register("mutate", funcoes.mutFlipToZero, indpb=MUTPB)
@@ -184,6 +206,7 @@ if __name__ == "__main__":
 
                     # Armazena o informacoes referentes a cada execucao
                     melhores.append(max(fits))
+                    points_inner.append(tools.selBest(populacao, k=1)[0])
 
                 print("-- Fim da Evolucao --")
 
@@ -252,22 +275,25 @@ if __name__ == "__main__":
 
                 # Escrevendo informacoes da execucao
                 f = open(directory + '/info.txt', 'w')
-                f.write('Media = ' + str(sum(melhores)/len(melhores)) + '\n' + 'Variancia = ' + str(functions.np.var(melhores)) +
-                        '\n' + 'Numero de Sensores implantados = ' + str(sum(points)) + '\n' + 'Avaliacao do Melhor Individuo = ' +
+                f.write('Media Fits = ' + str(sum(melhores)/len(melhores)) + '\n' + 'Variancia = ' +
+                        str(functions.np.var(points_inner)) + '\n' + 'Numero de Sensores implantados = ' +
+                        str(sum(points)) + '\n' + 'Avaliacao do Melhor Individuo = ' +
                         str(max(fits)) + '\n' + 'Melhor individuo = ' + str(points))
                 f.close()
 
                 # Encerra o multithreading
                 # pool.close()
 
-            directory_global = "/home/matheus/Documentos/Projeto_de_Graduacao/results/" + str(restricoes) +\
+            directory_global = "/home/matheus/Documentos/Projeto_de_Graduacao/results_alterado/" + str(restricoes) +\
                                "/" + str(pontos_potenciais)
 
             # Escrevendo informacoes da execucao global
             f = open(directory_global + '/info_global.txt', 'w')
-            f.write('Media = ' + str(sum(melhores_global)/len(melhores_global)) + '\n' + 'Variancia = ' +
-                    str(functions.np.var(melhores_global)) + '\n' + 'Media de Sensores implantados = ' +
-                    str(sum(points_global)/len(points_global)) + '\n' + 'Melhor execucao = ' + str(max(melhores_global)) )
+            f.write('Media Fits = ' + str(sum(melhores_global)/len(melhores_global)) + '\n' + 'Variancia = ' +
+                    str(functions.np.var(points_global)) + '\n' + 'Media de Sensores implantados = ' +
+                    str(sum(points_global)/len(points_global)) + '\n' + 'Melhor Fit das execucoes = ' +
+                    str(max(melhores_global)) + '\n' + 'Menor quantidade de pontos selecionados = ' +
+                    str(min(sum(points_global))))
             f.close()
             del funcoes
 
