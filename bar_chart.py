@@ -27,10 +27,10 @@ class Chart(object):
     proposto_means = ()
     proposto_std = ()
 
-    gupta_means = (18.6, 18.8, 21.8, 32.4, 31.8, 32.4, 42.4, 44.8, 43.4)
+    gupta_means = (21, 22, 26, 27, 29, 33, 35, 39, 45)
     gupta_std = (3, 5, 2, 3, 3, 4, 3, 2, 5)
 
-    # modificado_means = (21, 22, 26, 27, 29, 33, 35, 39, 45)
+    # modificado_means = (18.6, 18.8, 21.8, 32.4, 31.8, 32.4, 42.4, 44.8, 43.4)
     # modificado_std = (3, 1, 5, 3, 4, 1, 5, 3, 2)
     modificado_means = ()
     modificado_std = ()
@@ -42,8 +42,8 @@ class Chart(object):
     def start_chart(self, path):
 
         rects1 = self.get_ax().bar(self.get_ind(), self.proposto_means, self.get_width(), color='r')
-        rects2 = self.get_ax().bar(self.get_ind() + self.get_width(), self.get_gupta_means(), self.get_width(), color='y')
-        rects3 = self.get_ax().bar(self.get_ind()+(2*self.get_width()), self.get_modificado_means(), self.get_width(), color='b')
+        rects2 = self.get_ax().bar(self.get_ind() + self.get_width(), self.get_modificado_means(), self.get_width(), color='y')
+        rects3 = self.get_ax().bar(self.get_ind() + (2*self.get_width()), self.get_gupta_means(), self.get_width(), color='b')
 
         # informacoes das labels
         self.get_ax().set_ylabel('Número de Posições Potenciais Selecionadas')
@@ -59,7 +59,7 @@ class Chart(object):
         self.autolabel(rects2)
         self.autolabel(rects3)
 
-        plt.savefig(path)
+        plt.savefig(path + "/chart.png")
 
 
     def autolabel(self, rects):
@@ -114,7 +114,7 @@ class Chart(object):
         return self.temp_proposto
 
     def get_temp_modificado(self):
-        return self.tem_modificado
+        return self.temp_modificado
 
     def set_N(self, value):
         self.N = value
@@ -134,7 +134,7 @@ class Chart(object):
     def add_modificado_std(self, value):
         self.modificado_std = self.modificado_std + (value, )
 
-    def add_tem_proposto(self, value):
+    def add_temp_proposto(self, value):
         self.temp_proposto = self.temp_proposto + (value, )
 
     def add_temp_modificado(self, value):

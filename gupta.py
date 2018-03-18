@@ -1,8 +1,10 @@
 from __future__ import division
+from statistics import mean
 import random, functions, points_random, bar_chart
 from deap import creator, base, tools, algorithms
 # from scipy.spatial import Voronoi, voronoi_plot_2d
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import multiprocessing
 
 
@@ -82,6 +84,20 @@ def set_restrictions(argument):
         'k3m3': [3, 3],
     }
     return switcher.get(argument)
+
+
+class AnyObject(object):
+    pass
+
+class AnyObjectHandler(object):
+    def legend_artist(self, legend, orig_handle, fontsize, handlebox):
+        x0, y0 = handlebox.xdescent, handlebox.ydescent
+        width, height = handlebox.width, handlebox.height
+        patch = mpatches.Rectangle([x0, y0], width, height, facecolor='red',
+                                   edgecolor='black', hatch='xx', lw=3,
+                                   transform=handlebox.get_transform())
+        handlebox.add_artist(patch)
+        return patch
 
 
 if __name__ == "__main__":
@@ -275,13 +291,17 @@ if __name__ == "__main__":
                     figura_inner = plt.figure()
 
                     # Demostra a posicao dos pontos
-                    plt.plot(plotax, plotay, 'ro', ms=115, alpha=0.2)
+                    plt.plot(plotax, plotay, 'ro', ms=115, alpha=0.2, label="Raio de Detecção")
                     # plt.plot(plotax, plotay, 'yo', ms=100, alpha=0.1)
                     # plt.plot(plotax, plotay, 'ro')
-                    plt.plot(alvosx, alvosy, 'bo')
-                    plt.plot(ppx, ppy, 'g^')
+                    plt.plot(alvosx, alvosy, 'bo', label="Alvos")
+                    plt.plot(ppx, ppy, 'g^', label="Posições Potenciais")
                     plt.axis([0, 300, 0, 300])
                     plt.ylabel('Representacao do Melhor Individuo')
+                    legenda = plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+                    ncol=3,  mode="expand", borderaxespad=0.)
+                    for handle in legenda.legendHandles:
+                        handle._legmarker.set_markersize(10)
                     path = directory + "/evolucao_" + str(i + 1) + ".png"
                     plt.savefig(path)
                     plt.close(figura_inner)
@@ -291,9 +311,10 @@ if __name__ == "__main__":
                     figura_inner_2 = plt.figure()
 
                     # Grafico de convergencia
-                    plt.plot(melhores)
+                    converg = plt.plot(melhores, label="Convergência")
                     plt.ylabel('Grau de Precisao')
                     plt.xlabel('Numero de Geracoes')
+                    plt.legend(handles=converg, loc=0)
                     path_converg = directory + "/convergencia_" + str(i + 1) + ".png"
                     plt.savefig(path_converg)
                     plt.close(figura_inner_2)
@@ -316,13 +337,25 @@ if __name__ == "__main__":
                 f = open(directory_global + '/info_global.txt', 'w')
                 f.write('Media Fits = ' + str(sum(melhores_global)/len(melhores_global)) + '\n' + 'Variancia = ' +
                         str(functions.np.var(points_global)) + '\n' + 'Media de Sensores implantados = ' +
-                        str(sum(points_global)/len(points_global)) + '\n' + 'Melhor Fit das execucoes = ' +
+                        str(mean(points_global)) + '\n' + 'Melhor Fit das execucoes = ' +
                         str(max(melhores_global)) + '\n' + 'Menor quantidade de pontos selecionados = ' +
                         str(min(sum(points_global))))
                 f.close()
                 del funcoes
                 #dependendo da condicao(type) adicionar no proposto ou artigo a media
                 #no for externo, tirar a media dos pontos adicionados e adicionar na tupla final
+                if type == 'artigo':
+                    chart.add_temp_modificado(mean(points_global))
+                else:
+                    chart.add_temp_proposto(mean(points_global))
+
+            if type == 'artigo':
+                chart.add_modificado_means(mean(chart.get_temp_modificado()))
+            else:
+                chart.add_proposto_means(mean(chart.get_temp_propost()))
+
+    chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao")
+
 
 
     #Voronoi
