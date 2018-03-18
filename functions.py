@@ -1,6 +1,6 @@
 from __future__ import division
 import points_grid, points_random
-import math, numpy as np, random as rand
+import numpy as np, random as rand
 from scipy.spatial import distance
 import os
 import errno
@@ -61,8 +61,8 @@ class Functions(object):
 
     # Funcao para criar diretorio
 
-    def create_directory(self, i, restriction, quant_points):
-        directory = "/home/matheus/Documentos/Projeto_de_Graduacao/results_alterado/" + str(restriction) + "/" \
+    def create_directory(self, i, restriction, quant_points, path):
+        directory = path + str(restriction) + "/" \
                     + str(quant_points) + "/exec_" + str(i + 1)
         try:
             os.makedirs(directory)
