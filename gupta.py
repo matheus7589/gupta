@@ -1,6 +1,6 @@
 from __future__ import division
 from statistics import mean
-import random, functions, points_random, bar_chart
+import random, functions, points_random, bar_chart, points_grid
 from deap import creator, base, tools, algorithms
 # from scipy.spatial import Voronoi, voronoi_plot_2d
 import matplotlib.pyplot as plt
@@ -9,10 +9,11 @@ import multiprocessing
 
 
 TamPop = 60 #Tamanho da populacao
-W1, W2, W3 = 0.4, 0.3, 0.3
+W1, W2, W3 = 0.1, 0.45, 0.45
 
 CXPB, MUTPB = 0.5, 0.03
 
+# list_km = ['k3m3']
 list_km = ['k1m1', 'k1m2', 'k1m3', 'k2m1', 'k2m2', 'k2m3', 'k3m1', 'k3m2', 'k3m3']
 
 list_pp = ['100', '200', '300', '400', '500']
@@ -86,20 +87,6 @@ def set_restrictions(argument):
     return switcher.get(argument)
 
 
-class AnyObject(object):
-    pass
-
-class AnyObjectHandler(object):
-    def legend_artist(self, legend, orig_handle, fontsize, handlebox):
-        x0, y0 = handlebox.xdescent, handlebox.ydescent
-        width, height = handlebox.width, handlebox.height
-        patch = mpatches.Rectangle([x0, y0], width, height, facecolor='red',
-                                   edgecolor='black', hatch='xx', lw=3,
-                                   transform=handlebox.get_transform())
-        handlebox.add_artist(patch)
-        return patch
-
-
 if __name__ == "__main__":
 
     chart = bar_chart.Chart()
@@ -109,6 +96,10 @@ if __name__ == "__main__":
         for restricoes in list_km:
 
             for pontos_potenciais in list_pp:
+
+                # Armazenamento de informacao sobre a execucao
+                melhores_global = []
+                points_global = []
 
                 funcoes = get_test_type(type)[0]
 
@@ -120,9 +111,7 @@ if __name__ == "__main__":
 
                     # Armazenamento de informacao sobre a execucao
                     melhores = []
-                    melhores_global = []
                     points_inner = []
-                    points_global = []
 
                     creator.create("FitnessMax", base.Fitness, weights=(1.0,))  # indica que irei maximizar a funcao fitness
                     creator.create("Individuo", list, fitness=creator.FitnessMax)
@@ -146,6 +135,9 @@ if __name__ == "__main__":
                         obj1 = funcoes.objetivo1(individuo)
                         obj2 = funcoes.objetivo2(individuo)
                         obj3 = funcoes.objetivo3(individuo)
+                        print('Objetivo 1 = ', obj1)
+                        print('Objetivo 2 = ', obj2)
+                        print('Objetivo 3 = ', obj3)
 
                         return ((W1*(1.0 - obj1)) + (W2 * obj2) + (W3 * obj3)),
 
@@ -156,8 +148,10 @@ if __name__ == "__main__":
                     toolbox.register("evaluate", Fitness)
 
                     # registro do operador de crossover
-                    toolbox.register("mate", funcoes.swap_area_crossover)
-                    # toolbox.register("mate", tools.cxOnePoint)
+                    if type == 'proposto':
+                        toolbox.register("mate", funcoes.swap_area_crossover)
+                    else:
+                        toolbox.register("mate", tools.cxOnePoint)
 
                     # registro do operador de mutacao, e sua probabilidade de ocorrer
                     toolbox.register("mutate", funcoes.mutFlipToZero, indpb=MUTPB)
@@ -190,7 +184,7 @@ if __name__ == "__main__":
                     # Variavel que guarda o numero de geracoes
                     g = 0
 
-                    while max(fits) < 0.99 and g < 400:
+                    while max(fits) < 1.0 and g < 400:
                         # nova geracao
                         g = g + 1
                         print("-- Geracao %i --" % g)
@@ -242,7 +236,7 @@ if __name__ == "__main__":
                         # sum2 = sum(x * x for x in fits)
                         #
                         # print("  Min %s" % min(fits))
-                        # print("  Max %s" % max(fits))
+                        print("  Max %s" % max(fits))
                         # print("  Avg %s" % mean)
 
                         # Armazena o informacoes referentes a cada execucao
@@ -339,20 +333,22 @@ if __name__ == "__main__":
                         str(functions.np.var(points_global)) + '\n' + 'Media de Sensores implantados = ' +
                         str(mean(points_global)) + '\n' + 'Melhor Fit das execucoes = ' +
                         str(max(melhores_global)) + '\n' + 'Menor quantidade de pontos selecionados = ' +
-                        str(min(sum(points_global))))
+                        str(min(points_global)))
                 f.close()
                 del funcoes
                 #dependendo da condicao(type) adicionar no proposto ou artigo a media
                 #no for externo, tirar a media dos pontos adicionados e adicionar na tupla final
                 if type == 'artigo':
-                    chart.add_temp_modificado(mean(points_global))
+                    chart.add_temp_modificado(mean(points_global), functions.np.std(points_global))
                 else:
-                    chart.add_temp_proposto(mean(points_global))
+                    chart.add_temp_proposto(mean(points_global), functions.np.std(points_global))
 
             if type == 'artigo':
                 chart.add_modificado_means(mean(chart.get_temp_modificado()))
+                chart.add_modificado_std(mean(chart.get_temp_modificado_std()))
             else:
                 chart.add_proposto_means(mean(chart.get_temp_propost()))
+                chart.add_proposto_std(mean(chart.get_temp_proposto_std()))
 
     chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao")
 

@@ -13,7 +13,9 @@ class Chart(object):
 
     """Temporarias so pra nao sujar o arquivo gupta.py"""
     temp_proposto = ()
+    temp_proposto_std = ()
     temp_modificado = ()
+    temp_modificado_std = ()
     """"-----------------------------------------------"""
 
     N = 9
@@ -41,8 +43,8 @@ class Chart(object):
 
     def start_chart(self, path):
 
-        rects1 = self.get_ax().bar(self.get_ind(), self.proposto_means, self.get_width(), color='r')
-        rects2 = self.get_ax().bar(self.get_ind() + self.get_width(), self.get_modificado_means(), self.get_width(), color='y')
+        rects1 = self.get_ax().bar(self.get_ind(), self.proposto_means, self.get_width(), color='r', yerr=self.get_proposto_std())
+        rects2 = self.get_ax().bar(self.get_ind() + self.get_width(), self.get_modificado_means(), self.get_width(), color='y', yerr=self.get_modificado_std())
         rects3 = self.get_ax().bar(self.get_ind() + (2*self.get_width()), self.get_gupta_means(), self.get_width(), color='b')
 
         # informacoes das labels
@@ -116,6 +118,12 @@ class Chart(object):
     def get_temp_modificado(self):
         return self.temp_modificado
 
+    def get_temp_modificado_std(self):
+        return self.temp_modificado_std
+
+    def get_temp_proposto_std(self):
+        return self.temp_proposto_std
+
     def set_N(self, value):
         self.N = value
 
@@ -134,19 +142,22 @@ class Chart(object):
     def add_modificado_std(self, value):
         self.modificado_std = self.modificado_std + (value, )
 
-    def add_temp_proposto(self, value):
-        self.temp_proposto = self.temp_proposto + (value, )
+    def add_temp_proposto(self, value1, value2):
+        self.temp_proposto = self.temp_proposto + (value1, )
+        self.temp_proposto_std = self.temp_proposto_std + (value2, )
 
-    def add_temp_modificado(self, value):
-        self.temp_modificado = self.temp_modificado + (value, )
+    def add_temp_modificado(self, value1, value2):
+        self.temp_modificado = self.temp_modificado + (value1, )
+        self.temp_modificado_std = self.temp_modificado_std + (value2, )
 
     def reset_temporaries(self):
         self.temp_proposto = ()
         self.temp_modificado = ()
 
 # if __name__ == "__main__":
-#     chart = Chart()
-#     chart.add_proposto_means(33.5)
-#     chart.add_proposto_means(20)
-#     chart.add_proposto_means(10)
-#     print(chart.get_proposto_means())
+
+    # chart = Chart()
+    # chart.add_proposto_means(33.5)
+    # chart.add_proposto_means(20)
+    # chart.add_proposto_means(10)
+    # print(chart.get_proposto_means())
