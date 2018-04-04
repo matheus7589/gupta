@@ -9,7 +9,8 @@ import multiprocessing
 
 
 TamPop = 60 #Tamanho da populacao
-W1, W2, W3 = 0.1, 0.45, 0.45
+# W1, W2, W3 = 0.1, 0.45, 0.45
+W1, W2, W3 = 0.4, 0.3, 0.3
 
 CXPB, MUTPB = 0.5, 0.03
 
@@ -22,8 +23,8 @@ test_type = ['artigo', 'proposto']
 
 def get_test_type(argument):
     switcher = {
-        'artigo': [artigo(), "/home/matheus/Documentos/Projeto_de_Graduacao/results/"],
-        'proposto': [proposto(), "/home/matheus/Documentos/Projeto_de_Graduacao/results_alterado/"],
+        'artigo': [artigo(), "/home/rafael/Documentos/Projeto_de_Graduacao/results/"],
+        'proposto': [proposto(), "/home/rafael/Documentos/Projeto_de_Graduacao/results_alterado/"],
     }
     return switcher.get(argument)
 
@@ -99,6 +100,8 @@ if __name__ == "__main__":
 
                 # Armazenamento de informacao sobre a execucao
                 melhores_global = []
+                worst_global = []
+                best_global = []
                 points_global = []
 
                 funcoes = get_test_type(type)[0]
@@ -135,9 +138,9 @@ if __name__ == "__main__":
                         obj1 = funcoes.objetivo1(individuo)
                         obj2 = funcoes.objetivo2(individuo)
                         obj3 = funcoes.objetivo3(individuo)
-                        print('Objetivo 1 = ', obj1)
-                        print('Objetivo 2 = ', obj2)
-                        print('Objetivo 3 = ', obj3)
+                        # print('Objetivo 1 = ', obj1)
+                        # print('Objetivo 2 = ', obj2)
+                        # print('Objetivo 3 = ', obj3)
 
                         return ((W1*(1.0 - obj1)) + (W2 * obj2) + (W3 * obj3)),
 
@@ -246,13 +249,21 @@ if __name__ == "__main__":
                     print("-- Fim da Evolucao --")
 
                     top10 = tools.selBest(populacao, k=1)
+                    worst = tools.selWorst(populacao, k=1)
                     fits = [ind.fitness.values[0] for ind in top10]
+                    fit_worst = [ind.fitness.values[0] for ind in worst]
                     teste = []
                     points = top10[0]
+                    points_worst = worst[0]
+
 
                     # melhores globais
                     melhores_global.append(max(fits))
+                    worst_global.append([sum(points_worst), fit_worst[0]])
+                    best_global.append([sum(points), fits[0]])
                     points_global.append(sum(points))
+
+                    print(worst_global)
 
                     print(points, '\n', fits)
                     print("numero de sensores implantados", sum(points))
@@ -340,17 +351,35 @@ if __name__ == "__main__":
                 #no for externo, tirar a media dos pontos adicionados e adicionar na tupla final
                 if type == 'artigo':
                     chart.add_temp_modificado(mean(points_global), functions.np.std(points_global))
+                    chart.add_temp_modificado_best(max(best_global, key=lambda x: x[1]),
+                                                   functions.np.std(best_global, axis=0))
+                    chart.add_temp_modificado_worst(min(worst_global, key=lambda x: x[1]),
+                                                    functions.np.std(worst_global, axis=0))
                 else:
                     chart.add_temp_proposto(mean(points_global), functions.np.std(points_global))
+                    chart.add_temp_proposto_best(max(best_global, key=lambda x: x[1]),
+                                                 functions.np.std(best_global, axis=0))
+                    chart.add_temp_proposto_worst(min(worst_global, key=lambda x: x[1]),
+                                                  functions.np.std(worst_global, axis=0))
 
             if type == 'artigo':
                 chart.add_modificado_means(mean(chart.get_temp_modificado()))
                 chart.add_modificado_std(mean(chart.get_temp_modificado_std()))
+                chart.add_modificado_best(max(chart.get_temp_modificado_best(), key=lambda x: x[1])[0])
+                chart.add_modificado_best_std(max(chart.get_temp_modificado_best_std()))
+                chart.add_modificado_worst(min(chart.get_temp_modificado_worst(), key=lambda x: [1])[0])
+                chart.add_modificado_worst_std(min(chart.get_temp_modificado_worst_std()))
             else:
                 chart.add_proposto_means(mean(chart.get_temp_propost()))
                 chart.add_proposto_std(mean(chart.get_temp_proposto_std()))
+                chart.add_proposto_best(max(chart.get_temp_proposto_best(), key=lambda x: x[1])[0])
+                chart.add_proposto_best_std(max(chart.get_temp_proposto_best_std()))
+                chart.add_proposto_worst(min(chart.get_temp_proposto_worst(), key=lambda x: [1])[0])
+                chart.add_proposto_worst_std(min(chart.get_temp_proposto_worst_std()))
 
-    chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao")
+    chart.start_chart("/home/rafael/Documentos/Projeto_de_Graduacao", "/chart_media.png", 1)
+    chart.start_chart("/home/rafael/Documentos/Projeto_de_Graduacao", "/chart_melhor.png", 2)
+    chart.start_chart("/home/rafael/Documentos/Projeto_de_Graduacao", "/chart_pior.png", 3)
 
 
 

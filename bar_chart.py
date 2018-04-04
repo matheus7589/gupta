@@ -7,6 +7,7 @@ A bar plot with errorbars and height labels on individual bars
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import functions
 
 
 class Chart(object):
@@ -14,8 +15,21 @@ class Chart(object):
     """Temporarias so pra nao sujar o arquivo gupta.py"""
     temp_proposto = ()
     temp_proposto_std = ()
+
+    temp_proposto_best = ()
+    temp_proposto_best_std = ()
+
+    temp_proposto_worst = ()
+    temp_proposto_worst_std = ()
+
     temp_modificado = ()
     temp_modificado_std = ()
+
+    temp_modificado_best = ()
+    temp_modificado_best_std = ()
+
+    temp_modificado_worst = ()
+    temp_modificado_worst_std = ()
     """"-----------------------------------------------"""
 
     N = 9
@@ -29,6 +43,14 @@ class Chart(object):
     proposto_means = ()
     proposto_std = ()
 
+    '''-------------------------------------------------------------------'''
+    proposto_best = ()
+    proposto_best_std = ()
+
+    '''-------------------------------------------------------------------'''
+    proposto_worst = ()
+    proposto_worst_std = ()
+
     gupta_means = (21, 22, 26, 27, 29, 33, 35, 39, 45)
     gupta_std = (3, 5, 2, 3, 3, 4, 3, 2, 5)
 
@@ -36,16 +58,27 @@ class Chart(object):
     # modificado_std = (3, 1, 5, 3, 4, 1, 5, 3, 2)
     modificado_means = ()
     modificado_std = ()
+
     '''-------------------------------------------------------------------'''
+    modificado_best = ()
+    modificado_best_std = ()
+
+    '''-------------------------------------------------------------------'''
+    modificado_worst = ()
+    modificado_worst_std = ()
+
 
     # def __init__(self):
 
 
-    def start_chart(self, path):
+    def start_chart(self, path, title, type):
 
-        rects1 = self.get_ax().bar(self.get_ind(), self.proposto_means, self.get_width(), color='r', yerr=self.get_proposto_std())
-        rects2 = self.get_ax().bar(self.get_ind() + self.get_width(), self.get_modificado_means(), self.get_width(), color='y', yerr=self.get_modificado_std())
-        rects3 = self.get_ax().bar(self.get_ind() + (2*self.get_width()), self.get_gupta_means(), self.get_width(), color='b')
+
+        rects1 = self.get_ax().bar(self.get_ind(), self.get_type(type)[0], self.get_width(), color='r',
+                                   yerr=self.get_type(type)[1])
+        rects2 = self.get_ax().bar(self.get_ind() + self.get_width(), self.get_type(type)[2], self.get_width(),
+                                   color='y', yerr=self.get_type(type)[3])
+        rects3 = self.get_ax().bar(self.get_ind() + (2*self.get_width()), self.get_gupta_means(), self.get_width(), color='b', yerr=self.get_gupta_std())
 
         # informacoes das labels
         self.get_ax().set_ylabel('Número de Posições Potenciais Selecionadas')
@@ -61,7 +94,7 @@ class Chart(object):
         self.autolabel(rects2)
         self.autolabel(rects3)
 
-        plt.savefig(path + "/chart.png")
+        plt.savefig(path + title)
 
 
     def autolabel(self, rects):
@@ -74,6 +107,13 @@ class Chart(object):
                     '%d' % int(height),
                     ha='center', va='bottom')
 
+    def get_type(self, argument):
+        switcher = {
+            1: [self.get_proposto_means(), self.get_proposto_std(), self.get_modificado_means(), self.get_modificado_std()],
+            2: [self.get_proposto_best(), self.get_proposto_best_std(), self.get_modificado_best(), self.get_modificado_best_std()],
+            3: [self.get_proposto_worst(), self.get_proposto_worst_std(), self.get_modificado_worst(), self.get_modificado_worst_std()],
+        }
+        return switcher.get(argument)
 
 
     # plt.show()
@@ -112,6 +152,30 @@ class Chart(object):
     def get_modificado_std(self):
         return self.modificado_std
 
+    def get_proposto_best(self):
+        return self.proposto_best
+
+    def get_proposto_best_std(self):
+        return self.proposto_best_std
+
+    def get_modificado_best(self):
+        return self.modificado_best
+
+    def get_modificado_best_std(self):
+        return self.modificado_best_std
+
+    def get_proposto_worst(self):
+        return self.proposto_worst
+
+    def get_proposto_worst_std(self):
+        return self.proposto_worst
+
+    def get_modificado_worst(self):
+        return self.modificado_worst
+
+    def get_modificado_worst_std(self):
+        return self.modificado_worst_std
+
     def get_temp_propost(self):
         return self.temp_proposto
 
@@ -123,6 +187,30 @@ class Chart(object):
 
     def get_temp_proposto_std(self):
         return self.temp_proposto_std
+
+    def get_temp_proposto_best(self):
+        return self.temp_proposto_best
+
+    def get_temp_proposto_best_std(self):
+        return self.temp_proposto_best_std
+
+    def get_temp_modificado_best(self):
+        return self.temp_modificado_best
+
+    def get_temp_modificado_best_std(self):
+        return self.temp_modificado_best_std
+
+    def get_temp_proposto_worst(self):
+        return self.temp_proposto_worst
+
+    def get_temp_proposto_worst_std(self):
+        return self.temp_proposto_worst_std
+
+    def get_temp_modificado_worst(self):
+        return self.temp_modificado_worst
+
+    def get_temp_modificado_worst_std(self):
+        return self.temp_modificado_worst_std
 
     def set_N(self, value):
         self.N = value
@@ -136,26 +224,77 @@ class Chart(object):
     def add_proposto_std(self, value):
         self.proposto_std = self.proposto_std + (value, )
 
+    def add_proposto_best(self, value):
+        self.proposto_best = self.proposto_best + (value, )
+
+    def add_proposto_best_std(self, value):
+        self.proposto_best_std = self.proposto_best_std + (value, )
+
+    def add_proposto_worst(self, value):
+        self.proposto_worst = self.proposto_worst + (value, )
+
+    def add_proposto_worst_std(self, value):
+        self.proposto_worst_std = self.proposto_worst_std + (value, )
+
     def add_modificado_means(self, value):
         self.modificado_means = self.modificado_means + (value, )
 
     def add_modificado_std(self, value):
         self.modificado_std = self.modificado_std + (value, )
 
+    def add_modificado_best(self, value):
+        self.modificado_best = self.modificado_best + (value, )
+
+    def add_modificado_best_std(self, value):
+        self.modificado_best_std = self.modificado_best_std + (value, )
+
+    def add_modificado_worst(self, value):
+        self.modificado_best = self.modificado_best + (value, )
+
+    def add_modificado_worst_std(self, value):
+        self.modificado_worst_std = self.modificado_worst_std + (value, )
+
     def add_temp_proposto(self, value1, value2):
         self.temp_proposto = self.temp_proposto + (value1, )
         self.temp_proposto_std = self.temp_proposto_std + (value2, )
+
+    def add_temp_proposto_best(self, value1, value2):
+        self.temp_proposto_best = self.temp_proposto_best + (value1, )
+        self.temp_proposto_best_std = self.temp_proposto_best_std + (value2, )
+
+    def add_temp_proposto_worst(self, value1, value2):
+        self.temp_proposto_worst = self.temp_proposto_worst + (value1, )
+        self.temp_proposto_worst_std = self.temp_proposto_worst_std + (value2, )
 
     def add_temp_modificado(self, value1, value2):
         self.temp_modificado = self.temp_modificado + (value1, )
         self.temp_modificado_std = self.temp_modificado_std + (value2, )
 
+    def add_temp_modificado_best(self, value1, value2):
+        self.temp_modificado_best = self.temp_modificado_best + (value1, )
+        self.temp_modificado_best_std = self.temp_modificado_best_std + (value2, )
+
+    def add_temp_modificado_worst(self, value1, value2):
+        self.temp_modificado_worst = self.temp_modificado_worst + (value1, )
+        self.temp_modificado_worst_std = self.temp_modificado_worst_std + (value2, )
+
     def reset_temporaries(self):
         self.temp_proposto = ()
         self.temp_modificado = ()
+        self.temp_proposto_best = ()
+        self.temp_proposto_worst = ()
+        self.temp_modificado_best = ()
+        self.temp_modificado_worst = ()
+        self.temp_proposto_std = ()
+        self.temp_proposto_best_std = ()
+        self.temp_modificado_worst_std = ()
+        self.temp_modificado_best_std = ()
+        self.temp_proposto_std = ()
+        self.temp_proposto_worst_std = ()
 
-# if __name__ == "__main__":
-
+if __name__ == "__main__":
+    teste = [[14, 0.9030909090909092], [15, 0.9066666666666667]]
+    print(functions.np.std(teste, axis=0))
     # chart = Chart()
     # chart.add_proposto_means(33.5)
     # chart.add_proposto_means(20)
