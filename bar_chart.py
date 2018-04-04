@@ -292,9 +292,9 @@ class Chart(object):
         self.temp_proposto_std = ()
         self.temp_proposto_worst_std = ()
 
-if __name__ == "__main__":
-    teste = [[14, 0.9030909090909092], [15, 0.9066666666666667]]
-    print(functions.np.std(teste, axis=0))
+# if __name__ == "__main__":
+#     teste = [[14, 0.9030909090909092], [15, 0.9066666666666667]]
+#     print(functions.np.std(teste, axis=0))
     # chart = Chart()
     # chart.add_proposto_means(33.5)
     # chart.add_proposto_means(20)
