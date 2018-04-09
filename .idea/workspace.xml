@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2f56ff1-96a5-4c49-9e89-5acf66d1ccb4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/bar_chart.py" beforeDir="false" afterPath="$PROJECT_DIR$/bar_chart.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,7 +39,7 @@
       <file leaf-file-name="gupta.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gupta.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
+            <state relative-caret-position="6732">
               <caret line="381" column="90" selection-start-line="381" selection-start-column="90" selection-end-line="381" selection-end-column="90" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
@@ -81,7 +81,7 @@
       <file leaf-file-name="bar_chart.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bar_chart.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
+            <state relative-caret-position="475">
               <caret line="294" column="5" selection-start-line="294" selection-start-column="5" selection-end-line="296" selection-end-column="44" />
               <folding>
                 <element signature="e#99#117#0" expanded="true" />
@@ -202,8 +202,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../django/meusite" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../django" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -335,24 +335,24 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32903227" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5022801" side_tool="true" weight="0.39849624" />
       <window_info anchor="right" x="0" y="0" width="334" height="712" id="Documentation" order="6" side_tool="true" weight="0.32840833" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.495114" weight="0.40103492" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Python Console" order="8" weight="0.32903227" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.495114" weight="0.40103492" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32774192" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15715244" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15916723" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="5" weight="0.32975152" />
       <window_info anchor="right" x="372" y="136" width="855" height="588" id="SciView" order="3" weight="0.48421758" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49771988" weight="0.39741936" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49771988" weight="0.39741936" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" id="Data View" order="4" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32898173" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
     </layout>
@@ -369,6 +369,16 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/bar_chart.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5256">
+          <caret line="294" column="5" selection-start-line="294" selection-start-column="5" selection-end-line="296" selection-end-column="44" />
+          <folding>
+            <element signature="e#99#117#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/points_random.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3706">
@@ -648,9 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../.local/lib/python3.6/site-packages/deap/tools/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/points_grid.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4464">
@@ -684,7 +691,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gupta.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
+        <state relative-caret-position="6732">
           <caret line="381" column="90" selection-start-line="381" selection-start-column="90" selection-end-line="381" selection-end-column="90" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
@@ -694,7 +701,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bar_chart.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
+        <state relative-caret-position="475">
           <caret line="294" column="5" selection-start-line="294" selection-start-column="5" selection-end-line="296" selection-end-column="44" />
           <folding>
             <element signature="e#99#117#0" expanded="true" />
