@@ -23,8 +23,8 @@ test_type = ['artigo', 'proposto']
 
 def get_test_type(argument):
     switcher = {
-        'artigo': [artigo(), "/home/rafael/Documentos/Projeto_de_Graduacao/results/"],
-        'proposto': [proposto(), "/home/rafael/Documentos/Projeto_de_Graduacao/results_alterado/"],
+        'artigo': [artigo(), "/home/matheus/Documentos/Projeto_de_Graduacao/results/"],
+        'proposto': [proposto(), "/home/matheus/Documentos/Projeto_de_Graduacao/results_alterado/"],
     }
     return switcher.get(argument)
 
@@ -182,7 +182,7 @@ if __name__ == "__main__":
 
                     # Pegas todos os valores de fitness
                     fits = [ind.fitness.values[0] for ind in populacao]
-                    print(fits)
+                    # print(fits)
 
                     # Variavel que guarda o numero de geracoes
                     g = 0
@@ -263,10 +263,10 @@ if __name__ == "__main__":
                     best_global.append([sum(points), fits[0]])
                     points_global.append(sum(points))
 
-                    print(worst_global)
+                    # print(worst_global)
 
-                    print(points, '\n', fits)
-                    print("numero de sensores implantados", sum(points))
+                    # print(points, '\n', fits)
+                    # print("numero de sensores implantados", sum(points))
 
                     for key, plo in enumerate(points):
                         if plo == 1:
@@ -366,20 +366,20 @@ if __name__ == "__main__":
                 chart.add_modificado_means(mean(chart.get_temp_modificado()))
                 chart.add_modificado_std(mean(chart.get_temp_modificado_std()))
                 chart.add_modificado_best(max(chart.get_temp_modificado_best(), key=lambda x: x[1])[0])
-                chart.add_modificado_best_std(functions.np.max(chart.get_temp_modificado_best_std()))
+                chart.add_modificado_best_std(functions.np.max(chart.get_temp_modificado_best_std(), axis=0)[0])
                 chart.add_modificado_worst(min(chart.get_temp_modificado_worst(), key=lambda x: [1])[0])
-                chart.add_modificado_worst_std(functions.np.min(chart.get_temp_modificado_worst_std()))
+                chart.add_modificado_worst_std(functions.np.min(chart.get_temp_modificado_worst_std(), axis=0)[0])
             else:
                 chart.add_proposto_means(mean(chart.get_temp_propost()))
                 chart.add_proposto_std(mean(chart.get_temp_proposto_std()))
                 chart.add_proposto_best(max(chart.get_temp_proposto_best(), key=lambda x: x[1])[0])
-                chart.add_proposto_best_std(functions.np.max(chart.get_temp_proposto_best_std()))
+                chart.add_proposto_best_std(functions.np.max(chart.get_temp_proposto_best_std(), axis=0)[0])
                 chart.add_proposto_worst(min(chart.get_temp_proposto_worst(), key=lambda x: [1])[0])
-                chart.add_proposto_worst_std(functions.np.min(chart.get_temp_proposto_worst_std()))
+                chart.add_proposto_worst_std(functions.np.min(chart.get_temp_proposto_worst_std(), axis=0)[0])
 
-    chart.start_chart("/home/rafael/Documentos/Projeto_de_Graduacao", "/chart_media.png", 1)
-    chart.start_chart("/home/rafael/Documentos/Projeto_de_Graduacao", "/chart_melhor.png", 2)
-    chart.start_chart("/home/rafael/Documentos/Projeto_de_Graduacao", "/chart_pior.png", 3)
+    chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao", "/chart_media.png", 1)
+    chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao", "/chart_melhor.png", 2)
+    chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao", "/chart_pior.png", 3)
 
 
 
@@ -393,5 +393,3 @@ if __name__ == "__main__":
     # plt.savefig(path)
 
     # plt.show()
-
-
