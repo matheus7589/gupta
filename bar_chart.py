@@ -292,14 +292,14 @@ class Chart(object):
         self.temp_proposto_std = ()
         self.temp_proposto_worst_std = ()
 
-if __name__ == "__main__":
-
-    lista = ['arroz', 'feijao', 'batata', 'frango']
-    skip = 2
-    for i, value in enumerate(lista):
-        if i < skip:
-            continue
-        print(value)
+# if __name__ == "__main__":
+#
+#     lista = ['arroz', 'feijao', 'batata', 'frango']
+#     skip = 2
+#     for i, value in enumerate(lista):
+#         if i < skip:
+#             continue
+#         print(value)
 #     teste = [[15, 0.9174193548387097], [15, 0.8911627906976745], [16, 0.984872387237858]]
 #     print(functions.np.max(teste, axis=0)[0])
     # print(functions.np.std(teste, axis=0))

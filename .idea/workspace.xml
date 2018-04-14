@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2f56ff1-96a5-4c49-9e89-5acf66d1ccb4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bar_chart.py" beforeDir="false" afterPath="$PROJECT_DIR$/bar_chart.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gupta.py" beforeDir="false" afterPath="$PROJECT_DIR$/gupta.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,7 +37,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="gupta.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="gupta.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gupta.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-5051">
@@ -68,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bar_chart.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bar_chart.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bar_chart.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5382">
-              <caret line="301" column="19" selection-start-line="301" selection-start-column="19" selection-end-line="301" selection-end-column="19" />
+            <state relative-caret-position="176">
+              <caret line="294" selection-start-line="294" selection-start-column="2" selection-end-line="301" selection-end-column="22" />
               <folding>
                 <element signature="e#99#117#0" expanded="true" />
               </folding>
@@ -136,8 +135,8 @@
         <option value="C:/Python36/Lib/site-packages/deap/tools/_hypervolume/pyhv.py" />
         <option value="$PROJECT_DIR$/points_random.py" />
         <option value="$PROJECT_DIR$/functions.py" />
-        <option value="$PROJECT_DIR$/bar_chart.py" />
         <option value="$PROJECT_DIR$/gupta.py" />
+        <option value="$PROJECT_DIR$/bar_chart.py" />
       </list>
     </option>
   </component>
@@ -671,16 +670,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bar_chart.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5382">
-          <caret line="301" column="19" selection-start-line="301" selection-start-column="19" selection-end-line="301" selection-end-column="19" />
-          <folding>
-            <element signature="e#99#117#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/functions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -697,6 +686,16 @@
           <caret line="153" lean-forward="true" selection-start-line="153" selection-end-line="153" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bar_chart.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="294" selection-start-line="294" selection-start-column="2" selection-end-line="301" selection-end-column="22" />
+          <folding>
+            <element signature="e#99#117#0" expanded="true" />
           </folding>
         </state>
       </provider>
