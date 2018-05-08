@@ -11,7 +11,7 @@ import multiprocessing
 
 TamPop = 60 #Tamanho da populacao
 # W1, W2, W3 = 0.1, 0.45, 0.45
-W1, W2, W3 = 0.4, 0.3, 0.3
+W1, W2, W3 = 0.1, 0.8, 0.1
 
 CXPB, MUTPB = 0.5, 0.03
 
@@ -97,17 +97,17 @@ if __name__ == "__main__":
             chart = db['chart']
             # db['skip_list_pp'] = 0
             # db['skip_i'] = 28
-            # print(db['skip_list_pp'])
+            #print(db['skip_list_km'])
             # print(db['skip_i'])
         else:
             db['chart'] = chart
 
         '''Continue test_types'''
         if 'skip_test_type' in db:
-            # if db['skip_test_type'] == len(test_type):
-            #     skip_test_type = 0
-            # else:
-            skip_test_type = db['skip_test_type']
+            if db['skip_test_type'] == (len(test_type) - 1):
+                skip_test_type = 0
+            else:
+                skip_test_type = db['skip_test_type']
         else:
             skip_test_type = 0
         '''Continue test_types'''
@@ -121,10 +121,10 @@ if __name__ == "__main__":
 
             '''Continue da lista de restricoes'''
             if 'skip_list_km' in db:
-                # if db['skip_list_km'] == len(list_km):
-                #     skip_list_km = 0
-                # else:
-                skip_list_km = db['skip_list_km']
+                if db['skip_list_km'] == (len(list_km) - 1):
+                    skip_list_km = 0
+                else:
+                    skip_list_km = db['skip_list_km']
             else:
                 skip_list_km = 0
             '''Continue da lista de restricoes'''
@@ -137,10 +137,10 @@ if __name__ == "__main__":
 
                 '''Continue dos pontos potenciais'''
                 if 'skip_list_pp' in db:
-                    # if db['skip_list_pp'] == len(list_pp):
-                    #     skip_list_pp = 0
-                    # else:
-                    skip_list_pp = db['skip_list_pp']
+                    if db['skip_list_pp'] == (len(list_pp) - 1):
+                        skip_list_pp = 0
+                    else:
+                        skip_list_pp = db['skip_list_pp']
                 else:
                     skip_list_pp = 0
                 '''Continue dos pontos potenciais'''
@@ -465,9 +465,10 @@ if __name__ == "__main__":
 
                 db['chart'] = chart
 
-        chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao", "/chart_media.png", 1)
-        chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao", "/chart_melhor.png", 2)
-        chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao", "/chart_pior.png", 3)
+        if len(chart.get_proposto_means()) == 9 and len(chart.get_modificado_means()) == 9:
+            chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao", "/chart_media.png", 1)
+            chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao", "/chart_melhor.png", 2)
+            chart.start_chart("/home/matheus/Documentos/Projeto_de_Graduacao", "/chart_pior.png", 3)
         db['chart'] = chart
 
 
